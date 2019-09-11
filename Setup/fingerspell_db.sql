@@ -3,7 +3,7 @@ CREATE DATABASE fingerspell_db;
 USE fingerspell_db;
 
 CREATE TABLE gestures (
-	name VARCHAR(255) UNIQUE PRIMARY KEY,
+	name VARCHAR(255) UNIQUE NOT NULL PRIMARY KEY,
 	thumb_tip_x DECIMAL(10,5) NOT NULL,
 	thumb_tip_y DECIMAL(10,5) NOT NULL,
 	thumb_tip_z DECIMAL(10,5) NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE gestures (
 );
 
 CREATE TABLE raw_gestures (
-	name VARCHAR(255) UNIQUE PRIMARY KEY,
+	name VARCHAR(255) UNIQUE NOT NULL,
 	sample_no INT NOT NULL,
 	thumb_tip_x DECIMAL(10,5) NOT NULL,
 	thumb_tip_y DECIMAL(10,5) NOT NULL,
@@ -74,43 +74,9 @@ CREATE TABLE raw_gestures (
 	pinky_prox_z DECIMAL(10,5) NOT NULL,
 	palm_x DECIMAL(10,5) NOT NULL,
 	palm_y DECIMAL(10,5) NOT NULL,
-	palm_z DECIMAL(10,5) NOT NULL
-);
-
-CREATE TABLE validated_gestures (
-	name VARCHAR(255) UNIQUE PRIMARY KEY,
-	sample_no INT NOT NULL,
-	thumb_tip_x DECIMAL(10,5) NOT NULL,
-	thumb_tip_y DECIMAL(10,5) NOT NULL,
-	thumb_tip_z DECIMAL(10,5) NOT NULL,
-	thumb_prox_x DECIMAL(10,5) NOT NULL,
-	thumb_prox_y DECIMAL(10,5) NOT NULL,
-	thumb_prox_z DECIMAL(10,5) NOT NULL,
-	index_tip_x DECIMAL(10,5) NOT NULL,
-	index_tip_y DECIMAL(10,5) NOT NULL,
-	index_tip_z DECIMAL(10,5) NOT NULL,
-	index_prox_x DECIMAL(10,5) NOT NULL,
-	index_prox_y DECIMAL(10,5) NOT NULL,
-	index_prox_z DECIMAL(10,5) NOT NULL,
-	middle_tip_x DECIMAL(10,5) NOT NULL,
-	middle_tip_y DECIMAL(10,5) NOT NULL,
-	middle_tip_z DECIMAL(10,5) NOT NULL,
-	middle_prox_x DECIMAL(10,5) NOT NULL,
-	middle_prox_y DECIMAL(10,5) NOT NULL,
-	middle_prox_z DECIMAL(10,5) NOT NULL,
-	ring_tip_x DECIMAL(10,5) NOT NULL,
-	ring_tip_y DECIMAL(10,5) NOT NULL,
-	ring_tip_z DECIMAL(10,5) NOT NULL,
-	ring_prox_x DECIMAL(10,5) NOT NULL,
-	ring_prox_y DECIMAL(10,5) NOT NULL,
-	ring_prox_z DECIMAL(10,5) NOT NULL,
-	pinky_tip_x DECIMAL(10,5) NOT NULL,
-	pinky_tip_y DECIMAL(10,5) NOT NULL,
-	pinky_tip_z DECIMAL(10,5) NOT NULL,
-	pinky_prox_x DECIMAL(10,5) NOT NULL,
-	pinky_prox_y DECIMAL(10,5) NOT NULL,
-	pinky_prox_z DECIMAL(10,5) NOT NULL,
-	palm_x DECIMAL(10,5) NOT NULL,
-	palm_y DECIMAL(10,5) NOT NULL,
-	palm_z DECIMAL(10,5) NOT NULL
+	palm_z DECIMAL(10,5) NOT NULL,
+	PRIMARY KEY (name, sample_no),
+	CONSTRAINT fk_category
+    FOREIGN KEY (name)
+    REFERENCES gestures(name)
 );
