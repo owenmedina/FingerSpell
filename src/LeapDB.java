@@ -73,8 +73,15 @@ public class LeapDB {
 			double palm_x = palm[0];
 			double palm_y = palm[1];
 			double palm_z = palm[2];
-			PreparedStatement newOrder = con.prepareStatement("INSERT INTO raw_gestures VALUES(   )" );
-			newOrder.executeUpdate(); //execute the insert
+			PreparedStatement newGesture = con.prepareStatement("INSERT INTO raw_gestures VALUES('"
+						+ thumb_tip_x + "', '" + thumb_tip_y + "', '" + thumb_tip_z + "', '" + thumb_prox_x + "', '" + thumb_prox_y + "', '" + thumb_prox_z + "', '"
+						+ index_tip_x + "', '" + index_tip_y + "', '" + index_tip_z + "', '" + index_prox_x + "', '" + index_prox_y + "', '" + index_prox_z + "', '"
+						+ middle_tip_x + "', '" + middle_tip_y + "', '" + middle_tip_z + "', '" + middle_prox_x + "', '" + middle_prox_y + "', '" + middle_prox_z + "', '"
+						+ ring_tip_x + "', '" + ring_tip_y + "', '" + ring_tip_z + "', '" + ring_prox_x + "', '" + ring_prox_y + "', '" + ring_prox_z + "', '"
+						+ pinky_tip_x + "', '" + pinky_tip_y + "', '" + pinky_tip_z + "', '" + pinky_prox_x + "', '" + pinky_prox_y + "', '" + pinky_prox_z + "', '"
+						+ palm_x + "', '" + palm_y + "', '" + palm_z + "')"
+					);
+			newGesture.executeUpdate(); //execute the insert
 		}catch(Exception e) {
 			System.out.println("Error in insertOrders " + e); //in case of any errors;
 		}
