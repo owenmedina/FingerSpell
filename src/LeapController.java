@@ -5,12 +5,12 @@ import com.leapmotion.leap.*;
 import com.leapmotion.leap.Gesture.State;
 public class LeapController {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		LeapListener listener = new LeapListener(); // gets data from the Leap Motion Controller
 		Controller controller = new Controller();
-		LeapCalculator calculator = new LeapCalculator();
-		//LeapDB db = new LeapDB();
+
+		LeapDB db = new LeapDB();
 		
 		controller.addListener(listener);
 		

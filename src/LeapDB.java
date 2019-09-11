@@ -35,51 +35,80 @@ public class LeapDB {
 		return null;
 	}
 	
-	public static void insertSample(String name, double[][] thumb, double[][] index, double[][] middle, double[][] ring, double[][] pinky, double[] palm) throws Exception{
+	public static void insertSample(String name, int[][] distances) throws Exception{
+		
+		int tTip_tProx = distances[0][1];
+		int tTip_iTip  = distances[0][2];
+		int tTip_iProx  = distances[0][3];
+		int tTip_mTip = distances[0][4];
+		int tTip_mProx = distances[0][5];
+		int tTip_rTip = distances[0][6];
+		int tTip_rProx = distances[0][7];
+		int tTip_pTip = distances[0][8];
+		int tTip_pProx = distances[0][9];
+		int tTip_pc = distances[0][10];
+		int tProx_iTip = distances[1][2];
+		int tProx_iProx = distances[1][3];
+		int tProx_mTip = distances[1][4];
+		int tProx_mProx = distances[1][5];
+		int tProx_rTip = distances[1][6];
+		int tProx_rProx = distances[1][7];
+		int tProx_pTip = distances[1][8];
+		int tProx_pProx = distances[1][9];
+		int tProx_pc = distances[1][10];
+		int iTip_iProx = distances[2][3];
+		int iTip_mTip = distances[2][4];
+		int iTip_mProx = distances[2][5];
+		int iTip_rTip = distances[2][6];
+		int iTip_rProx = distances[2][7];
+		int iTip_pTip = distances[2][8];
+		int iTip_pProx = distances[2][9];
+		int iTip_pc = distances[2][10];
+		int iProx_mTip = distances[3][4];
+		int iProx_mProx = distances[3][5];
+		int iProx_rTip = distances[3][6];
+		int iProx_rProx = distances[3][7];
+		int iProx_pTip = distances[3][8];
+		int iProx_pProx = distances[3][9];
+		int iProx_pc = distances[3][10];
+		int mTip_mProx = distances[4][5];
+		int mTip_rTip = distances[4][6];
+		int mTip_rProx = distances[4][7];
+		int mTip_pTip = distances[4][8];
+		int mTip_pProx = distances[4][9];
+		int mTip_pc = distances[4][10];
+		int mProx_rTip = distances[5][6];
+		int mProx_rProx = distances[5][7];
+		int mProx_pTip = distances[5][8];
+		int mProx_pProx = distances[5][9];
+		int mProx_pc = distances[5][10];
+		int rTip_rProx = distances[6][7];
+		int rTip_pTip = distances[6][8];
+		int rTip_pProx = distances[6][9];
+		int rTip_pc = distances[6][10];
+		int rProx_pTip = distances[7][8];
+		int rProx_pProx = distances[7][9];
+		int rProx_pc = distances[7][10];
+		int pTip_pProx = distances[8][9];
+		int pTip_pc = distances[8][10];
+		int pProx_pc = distances[9][10];
+		
+		
 		// inserts a sample of a gesture in the gestures table
 		try{
 			// first inner array is for the x, y and z of the tip of the finger
 			// second inner array is for the x, y and z of the proximal joint of the finger
-			double thumb_tip_x = thumb[0][0];
-			double thumb_tip_y = thumb[0][1];
-			double thumb_tip_z = thumb[0][2];
-			double thumb_prox_x = thumb[1][0];
-			double thumb_prox_y = thumb[1][1];
-			double thumb_prox_z = thumb[1][2];
-			double index_tip_x = index[0][0];
-			double index_tip_y = index[0][1];
-			double index_tip_z = index[0][2];
-			double index_prox_x = index[1][0];
-			double index_prox_y = index[1][1];
-			double index_prox_z = index[1][2];
-			double middle_tip_x = middle[0][0];
-			double middle_tip_y = middle[0][1];
-			double middle_tip_z = middle[0][2];
-			double middle_prox_x = middle[1][0];
-			double middle_prox_y = middle[1][1];
-			double middle_prox_z = middle[1][2];
-			double ring_tip_x = ring[0][0];
-			double ring_tip_y = ring[0][1];
-			double ring_tip_z = ring[0][2];
-			double ring_prox_x = ring[1][0];
-			double ring_prox_y = ring[1][1];
-			double ring_prox_z = ring[1][2];
-			double pinky_tip_x = pinky[0][0];
-			double pinky_tip_y = pinky[0][1];
-			double pinky_tip_z = pinky[0][2];
-			double pinky_prox_x = pinky[1][0];
-			double pinky_prox_y = pinky[1][1];
-			double pinky_prox_z = pinky[1][2];
-			double palm_x = palm[0];
-			double palm_y = palm[1];
-			double palm_z = palm[2];
-			PreparedStatement newGesture = con.prepareStatement("INSERT INTO raw_gestures VALUES('"
-						+ thumb_tip_x + "', '" + thumb_tip_y + "', '" + thumb_tip_z + "', '" + thumb_prox_x + "', '" + thumb_prox_y + "', '" + thumb_prox_z + "', '"
-						+ index_tip_x + "', '" + index_tip_y + "', '" + index_tip_z + "', '" + index_prox_x + "', '" + index_prox_y + "', '" + index_prox_z + "', '"
-						+ middle_tip_x + "', '" + middle_tip_y + "', '" + middle_tip_z + "', '" + middle_prox_x + "', '" + middle_prox_y + "', '" + middle_prox_z + "', '"
-						+ ring_tip_x + "', '" + ring_tip_y + "', '" + ring_tip_z + "', '" + ring_prox_x + "', '" + ring_prox_y + "', '" + ring_prox_z + "', '"
-						+ pinky_tip_x + "', '" + pinky_tip_y + "', '" + pinky_tip_z + "', '" + pinky_prox_x + "', '" + pinky_prox_y + "', '" + pinky_prox_z + "', '"
-						+ palm_x + "', '" + palm_y + "', '" + palm_z + "')"
+			
+			PreparedStatement newGesture = con.prepareStatement("INSERT INTO gestures VALUES('"
+						+ tTip_tProx + "', '" + tTip_iTip + "', '" + tTip_iProx + "', '" + tTip_mTip + "', '" + tTip_mProx + "', '" + tTip_rTip + "', '"
+						+ tTip_rProx + "', '" + tTip_pTip + "', '" + tTip_pProx + "', '" + tTip_pc + "', '" + tProx_iTip + "', '" + tProx_iProx + "', '"
+						+ tProx_mTip + "', '" + tProx_mProx + "', '" + tProx_rTip + "', '" + tProx_rProx + "', '" + tProx_pTip + "', '" + tProx_pProx + "', '"
+						+ tProx_pc + "', '" + iTip_iProx + "', '" + iTip_mTip + "', '" + iTip_mProx + "', '" + iTip_rTip + "', '" + iTip_rProx + "', '"
+						+ iTip_pTip + "', '" + iTip_pProx + "', '" + iTip_pc + "', '" + iProx_mTip + "', '" + iProx_mProx + "', '" + iProx_rTip + "', '"
+						+ iProx_rProx + "', '" + iProx_pTip + "', '" + iProx_pProx + "', '" + iProx_pc + "', '" + mTip_mProx + "', '" + mTip_rTip + "', '"
+						+ mTip_rProx + "', '" + mTip_pTip + "', '" + mTip_pProx + "', '" + mTip_pc + "', '" + mProx_rTip + "', '" + mProx_rProx + "', '"
+						+ mProx_pTip + "', '" + mProx_pProx + "', '" + mProx_pc + "', '" + rTip_rProx + "', '" + rTip_pTip + "', '" + rTip_pProx + "', '"
+						+ rTip_pc + "', '" + rProx_pTip + "', '" + rProx_pProx + "', '" + rProx_pc + "', '" + pTip_pProx + "', '" + pTip_pc + "', '" + pProx_pc + "')"
 					);
 			newGesture.executeUpdate(); //execute the insert
 		}catch(Exception e) {
