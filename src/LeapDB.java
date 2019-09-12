@@ -111,11 +111,11 @@ public class LeapDB {
 						+ rTip_pc + "', '" + rProx_pTip + "', '" + rProx_pProx + "', '" + rProx_pc + "', '" + pTip_pProx + "', '" + pTip_pc + "', '" + pProx_pc + "')"
 					);
 			newGesture.executeUpdate(); //execute the insert
+			System.out.println("Insert to gestures completed"); //tester;
 		}catch(Exception e) {
 			System.out.println("Error in insertSample " + e); //in case of any errors;
 		}
 		finally{
-			System.out.println("Insert to gestures completed"); //tester;
 		}
 	}
 	
