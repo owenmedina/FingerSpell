@@ -25,7 +25,7 @@ public class LeapDB {
 			
 			//establish connection
 			String user = "root" ;
-			String pw = "" ;
+			String pw = "fspell" ;
 			Connection conn = DriverManager.getConnection(url, user, pw);
 			System.out.println("Connected successfully."); //tester
 			return conn;
@@ -112,10 +112,10 @@ public class LeapDB {
 					);
 			newGesture.executeUpdate(); //execute the insert
 		}catch(Exception e) {
-			System.out.println("Error in insertOrders " + e); //in case of any errors;
+			System.out.println("Error in insertSample " + e); //in case of any errors;
 		}
 		finally{
-			System.out.println("Insert to Orders completed"); //tester;
+			System.out.println("Insert to gestures completed"); //tester;
 		}
 	}
 	
