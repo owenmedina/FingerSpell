@@ -25,7 +25,7 @@ public class LeapDB {
 			
 			//establish connection
 			String user = "root" ;
-			String pw = "fspell" ;
+			String pw = "brianowen" ;
 			Connection conn = DriverManager.getConnection(url, user, pw);
 			System.out.println("Connected successfully."); //tester
 			return conn;
@@ -35,63 +35,63 @@ public class LeapDB {
 		return null;
 	}
 	
-	public static void insertSample(String name, int[][] distances) throws Exception{
+	public static void insertSample(String name, int[] distances) throws Exception{
 		
-		int tTip_tProx = distances[0][1];
-		int tTip_iTip  = distances[0][2];
-		int tTip_iProx  = distances[0][3];
-		int tTip_mTip = distances[0][4];
-		int tTip_mProx = distances[0][5];
-		int tTip_rTip = distances[0][6];
-		int tTip_rProx = distances[0][7];
-		int tTip_pTip = distances[0][8];
-		int tTip_pProx = distances[0][9];
-		int tTip_pc = distances[0][10];
-		int tProx_iTip = distances[1][2];
-		int tProx_iProx = distances[1][3];
-		int tProx_mTip = distances[1][4];
-		int tProx_mProx = distances[1][5];
-		int tProx_rTip = distances[1][6];
-		int tProx_rProx = distances[1][7];
-		int tProx_pTip = distances[1][8];
-		int tProx_pProx = distances[1][9];
-		int tProx_pc = distances[1][10];
-		int iTip_iProx = distances[2][3];
-		int iTip_mTip = distances[2][4];
-		int iTip_mProx = distances[2][5];
-		int iTip_rTip = distances[2][6];
-		int iTip_rProx = distances[2][7];
-		int iTip_pTip = distances[2][8];
-		int iTip_pProx = distances[2][9];
-		int iTip_pc = distances[2][10];
-		int iProx_mTip = distances[3][4];
-		int iProx_mProx = distances[3][5];
-		int iProx_rTip = distances[3][6];
-		int iProx_rProx = distances[3][7];
-		int iProx_pTip = distances[3][8];
-		int iProx_pProx = distances[3][9];
-		int iProx_pc = distances[3][10];
-		int mTip_mProx = distances[4][5];
-		int mTip_rTip = distances[4][6];
-		int mTip_rProx = distances[4][7];
-		int mTip_pTip = distances[4][8];
-		int mTip_pProx = distances[4][9];
-		int mTip_pc = distances[4][10];
-		int mProx_rTip = distances[5][6];
-		int mProx_rProx = distances[5][7];
-		int mProx_pTip = distances[5][8];
-		int mProx_pProx = distances[5][9];
-		int mProx_pc = distances[5][10];
-		int rTip_rProx = distances[6][7];
-		int rTip_pTip = distances[6][8];
-		int rTip_pProx = distances[6][9];
-		int rTip_pc = distances[6][10];
-		int rProx_pTip = distances[7][8];
-		int rProx_pProx = distances[7][9];
-		int rProx_pc = distances[7][10];
-		int pTip_pProx = distances[8][9];
-		int pTip_pc = distances[8][10];
-		int pProx_pc = distances[9][10];
+		int tTip_tProx = distances[0];
+		int tTip_iTip  = distances[1];
+		int tTip_iProx  = distances[2];
+		int tTip_mTip = distances[3];
+		int tTip_mProx = distances[4];
+		int tTip_rTip = distances[5];
+		int tTip_rProx = distances[6];
+		int tTip_pTip = distances[7];
+		int tTip_pProx = distances[8];
+		int tTip_pc = distances[9];
+		int tProx_iTip = distances[10];
+		int tProx_iProx = distances[11];
+		int tProx_mTip = distances[12];
+		int tProx_mProx = distances[13];
+		int tProx_rTip = distances[14];
+		int tProx_rProx = distances[15];
+		int tProx_pTip = distances[16];
+		int tProx_pProx = distances[17];
+		int tProx_pc = distances[18];
+		int iTip_iProx = distances[19];
+		int iTip_mTip = distances[20];
+		int iTip_mProx = distances[21];
+		int iTip_rTip = distances[22];
+		int iTip_rProx = distances[23];
+		int iTip_pTip = distances[24];
+		int iTip_pProx = distances[25];
+		int iTip_pc = distances[26];
+		int iProx_mTip = distances[27];
+		int iProx_mProx = distances[28];
+		int iProx_rTip = distances[29];
+		int iProx_rProx = distances[30];
+		int iProx_pTip = distances[31];
+		int iProx_pProx = distances[32];
+		int iProx_pc = distances[33];
+		int mTip_mProx = distances[34];
+		int mTip_rTip = distances[35];
+		int mTip_rProx = distances[36];
+		int mTip_pTip = distances[37];
+		int mTip_pProx = distances[38];
+		int mTip_pc = distances[39];
+		int mProx_rTip = distances[40];
+		int mProx_rProx = distances[41];
+		int mProx_pTip = distances[42];
+		int mProx_pProx = distances[43];
+		int mProx_pc = distances[44];
+		int rTip_rProx = distances[45];
+		int rTip_pTip = distances[46];
+		int rTip_pProx = distances[47];
+		int rTip_pc = distances[48];
+		int rProx_pTip = distances[49];
+		int rProx_pProx = distances[50];
+		int rProx_pc = distances[51];
+		int pTip_pProx = distances[52];
+		int pTip_pc = distances[53];
+		int pProx_pc = distances[54];
 		
 		
 		// inserts a sample of a gesture in the gestures table

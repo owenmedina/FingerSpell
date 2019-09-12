@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import com.leapmotion.leap.*;
@@ -21,8 +22,8 @@ public class LeapController {
 			Frame frame = controller.frame();
 			int[] distances = listener.getEuclidDistances(frame);
 			String name = sc.nextLine();
-			//db.insertSample(name, distances);
-			System.out.println("Hello");
+			db.insertSample(name, distances);
+			System.out.println("Snapshot taken");
 		}
 //		try {
 //			System.in.read();
