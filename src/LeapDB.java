@@ -99,7 +99,7 @@ public class LeapDB {
 			// first inner array is for the x, y and z of the tip of the finger
 			// second inner array is for the x, y and z of the proximal joint of the finger
 			
-			PreparedStatement newGesture = con.prepareStatement("INSERT INTO gestures VALUES('" + name +
+			PreparedStatement newGesture = con.prepareStatement("INSERT INTO gestures VALUES('" + name + "', '"
 						+ tTip_tProx + "', '" + tTip_iTip + "', '" + tTip_iProx + "', '" + tTip_mTip + "', '" + tTip_mProx + "', '" + tTip_rTip + "', '"
 						+ tTip_rProx + "', '" + tTip_pTip + "', '" + tTip_pProx + "', '" + tTip_pc + "', '" + tProx_iTip + "', '" + tProx_iProx + "', '"
 						+ tProx_mTip + "', '" + tProx_mProx + "', '" + tProx_rTip + "', '" + tProx_rProx + "', '" + tProx_pTip + "', '" + tProx_pProx + "', '"
