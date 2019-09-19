@@ -1,6 +1,5 @@
 import java.sql.*;
 import java.sql.Date;
-import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -117,6 +116,33 @@ public class LeapDB {
 		}
 		finally{
 		}
+	}
+	
+public static int[] selectGesture(String name) throws Exception{
+		System.out.println("entered SG");
+		int[] results = new int[Constants.NUM_DISTANCES];
+		// inserts a sample of a gesture in the gestures table
+		try{
+			// first inner array is for the x, y and z of the tip of the finger
+			// second inner array is for the x, y and z of the proximal joint of the finger
+			PreparedStatement command = con.prepareStatement("SELECT * from gestures WHERE name = '" + name + "'");
+			ResultSet result = command.executeQuery();
+                        
+			result.next();
+			for(int i = 2; i <= Constants.NUM_DISTANCES + 1; i++) {
+				String num = result.getString(i);
+				System.out.println(num);
+				results[i-2] = Integer.parseInt(num);
+			}
+			
+			
+			System.out.println("Select from gestures success"); //tester;
+		}catch(Exception e) {
+			System.out.println("Error in selectGesture " + e); //in case of any errors;
+		}
+		finally{
+		}
+		return results;
 	}
 	
         
