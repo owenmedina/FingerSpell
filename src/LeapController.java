@@ -27,11 +27,15 @@ public class LeapController {
 			db.insertSample(name, distances);
 			System.out.println("Snapshot taken");
 		}else if(input.equals("f")) {
-			System.out.println("Enter gesture name: ");
-			String name = sc.next();
-			int[] distances = db.selectGesture(name);
-			System.out.println(distances.length);
-			System.out.println(calculator.frobNorm(distances));
+			while( !input.equals("exit")) {
+				System.out.println("Enter gesture name: ");
+				String name = sc.next();
+				int[] distances = db.selectGesture(name);
+				System.out.println(distances.length);
+				System.out.println(calculator.frobNorm(distances));
+				input = sc.next();
+			}
+			
 		}
 //		try {
 //			System.in.read();

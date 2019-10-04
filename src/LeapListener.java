@@ -66,6 +66,17 @@ public class LeapListener extends Listener {
 		HandList handsInFrame = frame.hands();
 		pointsOfInterest[indexPoints] = handsInFrame.get(0).palmPosition();
 		
+		//Getting the degrees
+		
+		for( Hand h : handsInFrame ) {
+			Vector normal = h.palmNormal();
+			Vector direction = h.direction();
+			
+			System.out.println("Pitch: " + Math.toDegrees(direction.pitch())
+								+ " Roll: " + Math.toDegrees(normal.roll())
+								+ " Yaw: " + Math.toDegrees(direction.yaw()));
+		}
+		
 		// get all 55 distances
 		int indexDistances = 0;
 		for(int i = 0; i < Constants.NUM_POINTS; i++) {
