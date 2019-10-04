@@ -72,9 +72,9 @@ public class LeapListener extends Listener {
 			Vector normal = h.palmNormal();
 			Vector direction = h.direction();
 			
-			System.out.println("Pitch: " + Math.toDegrees(direction.pitch())
-								+ " Roll: " + Math.toDegrees(normal.roll())
-								+ " Yaw: " + Math.toDegrees(direction.yaw()));
+			System.out.println("Pitch: " + Math.toDegrees(direction.pitch()) //Yes
+								+ " Roll: " + Math.toDegrees(normal.roll()) //Maybe
+								+ " Yaw: " + Math.toDegrees(direction.yaw())); //No
 		}
 		
 		// get all 55 distances
