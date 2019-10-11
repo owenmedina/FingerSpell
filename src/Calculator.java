@@ -1,3 +1,8 @@
+import java.util.HashMap;
+
+import com.leapmotion.leap.*;
+import com.leapmotion.leap.Finger.Type;
+import com.sun.javafx.collections.MappingChange.Map;
 
 public class Calculator {
 	public static double frobNorm(int[]a){
@@ -6,5 +11,139 @@ public class Calculator {
 			sum += (i*i);
 		}
 		return Math.sqrt(sum);
-	} 
+	}
+	
+	// Feature set R
+	public static double getPalmSphereRadius(Hand hand) {
+		return hand.sphereRadius();
+	}
+	
+	// Feature set SD
+	public static double[] getSDPalmPosition(double[] x, double[] y, double[] z) {	
+		double xSD = standardDeviation(x);
+		double ySD = standardDeviation(y);
+		double zSD = standardDeviation(z);
+		
+		double[] posSD = {xSD, ySD, zSD};
+		return posSD;
+	}
+	
+	// Feature set PD
+	public static double[] getPalmFingerDistances(Frame frame) {
+		Vector[] fingers = new Vector[Constants.NUM_FINGERS];
+		int indexFingers = 0;
+		for (Finger finger : frame.fingers()) {
+			System.out.println("Finger type: " + finger.type()
+								+ " ID: " + finger.id()
+								+ " Finger Length (mm): " + finger.length()
+								+ " Finger Width (mm): " + finger.width()
+								);
+
+			Bone tip = finger.bone(Bone.Type.TYPE_DISTAL);
+			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
+								+ " End: " + tip.nextJoint()
+								);
+			fingers[indexFingers++] = tip.nextJoint();
+		}
+		HandList handsInFrame = frame.hands();
+		Vector palmCenter = handsInFrame.get(0).palmPosition();
+		
+		// get all 10 distances (palm to each finger tip)
+		double[] distances = {};
+		for(int i = 0; i < 10; i++) {
+			Vector finger = fingers[i];
+			distances[i] = palmCenter.distanceTo(finger);
+			System.out.println("Point" + i + " to Palm" + ": " + distances[i]);
+		}
+		return distances;
+	}
+	
+	// Feature set FD
+	public static double[] getFingerDistances(Frame frame) {
+		Vector[] fingers = new Vector[Constants.NUM_FINGERS];
+		int indexFingers = 0;
+		for (Finger finger : frame.fingers()) {
+			System.out.println("Finger type: " + finger.type()
+								+ " ID: " + finger.id()
+								+ " Finger Length (mm): " + finger.length()
+								+ " Finger Width (mm): " + finger.width()
+								);
+
+			Bone tip = finger.bone(Bone.Type.TYPE_DISTAL);
+			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
+								+ " End: " + tip.nextJoint()
+								);
+			fingers[indexFingers++] = tip.nextJoint();
+		}
+		
+		// get all 10 distances (palm to each finger tip)
+		double[] distances = {};
+		for(int i = 0; i < Constants.NUM_FINGERS; i++) {
+			for(int j = i+1; j < Constants.NUM_FINGERS; j++) {
+				Vector finger1 = fingers[i];
+				Vector finger2 = fingers[j];
+				distances[i] = finger2.distanceTo(finger1);
+				System.out.println("Point" + i + " to Point" + j + ": " + distances[i]);
+			}
+		}
+		return distances;
+	}
+	
+	// Feature set A
+	public static double[] getFingerAngles(Frame frame) {
+		HashMap<Type, Vector> fingers = new HashMap<Type, Vector>();
+		for (Finger finger : frame.fingers()) {
+			System.out.println("Finger type: " + finger.type()
+								+ " ID: " + finger.id()
+								+ " Finger Length (mm): " + finger.length()
+								+ " Finger Width (mm): " + finger.width()
+								);
+
+			Bone tip = finger.bone(Bone.Type.TYPE_DISTAL);
+			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
+								+ " End: " + tip.nextJoint()
+								);
+			fingers.put(finger.type(), tip.nextJoint());
+		}
+		
+		// get all 5 angles
+		Vector thumb = fingers.get(Finger.Type.TYPE_THUMB);
+		Vector index = fingers.get(Finger.Type.TYPE_INDEX);
+		Vector middle = fingers.get(Finger.Type.TYPE_MIDDLE);
+		Vector ring = fingers.get(Finger.Type.TYPE_RING);
+		Vector pinky = fingers.get(Finger.Type.TYPE_PINKY);
+		double[] angles = {};
+		// thumb to index
+		angles[0] = thumb.angleTo(index);
+		// index to middle
+		angles[1] = index.angleTo(middle);		
+		// middle to ring
+		angles[2] = middle.angleTo(ring);		
+		// ring to pinky
+		angles[3] = ring.angleTo(pinky);		
+		// pinky to thumb
+		angles[4] = pinky.angleTo(thumb);
+		
+		return angles;
+	}
+	
+	
+	public static double standardDeviation(double[] data) {
+		int size = data.length;
+		double sum = 0.0;
+		double standardDeviation = 0.0;
+		
+		// get mean
+        for(double elem : data) {
+            sum += elem;
+        }
+        double mean = sum/size;
+        
+        // add all squares of the differences between each element and the mean
+        for(double elem: data) {
+            standardDeviation += Math.pow(elem - mean, 2);
+        }
+        
+        return Math.sqrt(standardDeviation/size);
+	}
 }
