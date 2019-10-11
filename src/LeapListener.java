@@ -1,5 +1,8 @@
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Gesture.State;
+import com.opencsv.CSVWriter;
+
+import java.io.*;
 public class LeapListener extends Listener {
 	public void onInit (Controller controller) {
 		System.out.println("Initialized");
@@ -88,6 +91,111 @@ public class LeapListener extends Listener {
 			}
 		}
 		return distances;
+	}
+	
+	public Vector[] getPointsOfInterest(Frame frame) {
+		int indexPoints = 0;
+		
+		// get all 11 points of interest
+		Vector[] pointsOfInterest = new Vector[Constants.NUM_POINTS];
+		for (Finger finger : frame.fingers()) {
+			System.out.println("Finger type: " + finger.type()
+								+ " ID: " + finger.id()
+								+ " Finger Length (mm): " + finger.length()
+								+ " Finger Width (mm): " + finger.width()
+								);
+
+			Bone tip = finger.bone(Bone.Type.TYPE_DISTAL);
+			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
+								+ " End: " + tip.nextJoint()
+								);
+			pointsOfInterest[indexPoints++] = tip.nextJoint();
+			Bone prox = finger.bone(Bone.Type.TYPE_PROXIMAL);
+			System.out.println("Bone Type: " + Bone.Type.TYPE_PROXIMAL
+								+ " Start: " + prox.prevJoint()
+								);
+			pointsOfInterest[indexPoints++] = prox.prevJoint();
+		}
+		HandList handsInFrame = frame.hands();
+		pointsOfInterest[indexPoints] = handsInFrame.get(0).palmPosition();
+		
+		return pointsOfInterest;
+	}
+	
+	public void createCoordinatesCSVFile(String fileName, Frame frame) { 
+		// first create file object for file placed at location 
+		// specified by filepath 
+		
+		File file = new File(fileName); 
+		try { 
+			// create FileWriter object with file as parameter 
+			FileWriter outputfile = new FileWriter(file); 
+
+			// create CSVWriter object filewriter object as parameter 
+			CSVWriter writer = new CSVWriter(outputfile); 
+
+			// adding header to csv 
+			String[] header = { "t_ProxX", "t_ProxY", "t_ProxZ", 
+								"t_TipX", "t_TipY", "t_TipZ", 
+								"i_ProxX", "i_ProxY", "i_ProxZ", 
+								"i_TipX", "i_TipY", "i_ProxZ",
+								"m_ProxX", "m_ProxY", "m_ProxZ",
+								"m_TipX", "m_TipY", "m_TipZ", 
+								"r_ProxX", "r_ProxY", "r_ProxZ",
+								"r_TipX", "r_TipY", "r_TipZ", 
+								"pcX", "pcY", "pcZ" }; 
+			writer.writeNext(header); 
+			
+			int index = 0;
+			String[] coordinates = new String[Constants.TOTAL_COORDINATES];
+			
+			// get all 11 points of interest
+			for (Finger finger : frame.fingers()) {
+				System.out.println("Finger type: " + finger.type()
+									+ " ID: " + finger.id()
+									+ " Finger Length (mm): " + finger.length()
+									+ " Finger Width (mm): " + finger.width()
+									);
+
+				Bone tip = finger.bone(Bone.Type.TYPE_DISTAL);
+				System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
+									+ " End: " + tip.nextJoint()
+									);
+				
+				//append to string array of coordinates
+				Vector tipC = tip.nextJoint();
+				coordinates[index++] = tipC.getX() + "";
+				coordinates[index++] = tipC.getY() + "";
+				coordinates[index++] = tipC.getZ() + "";
+				
+				Bone prox = finger.bone(Bone.Type.TYPE_PROXIMAL);
+				System.out.println("Bone Type: " + Bone.Type.TYPE_PROXIMAL
+									+ " Start: " + prox.prevJoint()
+									);
+				
+				//append to string array of coordinates
+				Vector proxC = prox.nextJoint();
+				coordinates[index++] = proxC.getX() + "";
+				coordinates[index++] = proxC.getY() + "";
+				coordinates[index++] = proxC.getZ() + "";
+			}
+			HandList handsInFrame = frame.hands();
+			Vector pc = handsInFrame.get(0).palmPosition();
+			coordinates[index++] = pc.getX() + "";
+			coordinates[index++] = pc.getY() + "";
+			coordinates[index++] = pc.getZ() + "";
+			
+			//write the coordinates as one row in the csv
+			writer.writeNext(coordinates);
+			
+
+			// closing writer connection 
+			writer.close(); 
+		} 
+		catch (IOException e) { 
+			// TODO Auto-generated catch block 
+			e.printStackTrace(); 
+		} 
 	}
 
 }
