@@ -1,0 +1,21 @@
+
+# Setting PATH for Python 3.5
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:${PATH}"
+export PATH
+
+export JAVA_HOME=$(/usr/libexec/java_home)
+export PATH=${PATH}:/usr/local/mysql/bin/
+# added by Anaconda3 5.2.0 installer
+export PATH="/anaconda3/bin:$PATH"
+export PATH="/Applications/XAMPP/xamppfiles/bin:$PATH"
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+
+# Aliases
+alias c=clear
+alias go='git checkout'
+alias gc='git commit'
+alias ga='git add'
+alias gs='git status'
+alias gbr='git branch'
+alias glocd='git branch -d' # delete local branch if it's been merged to the upstream branch
