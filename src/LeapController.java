@@ -36,7 +36,13 @@ public class LeapController {
 				input = sc.next();
 			}
 			
+		}else if(input.equals("c")) {
+			Frame frame = controller.frame();
+			String fileName = "Coordinates.csv";
+			listener.createCoordinatesCSVFile(fileName,frame);
+			
 		}
+				
 //		try {
 //			System.in.read();
 //		} catch (IOException e) {
