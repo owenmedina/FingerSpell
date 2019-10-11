@@ -7,4 +7,6 @@ public final class Constants  {
   public static final int NUM_POINTS = 11;
   /** Number of coordinates for 11 points of interest */
   public static final int TOTAL_COORDINATES = 33;
+  /** Number of fingers on a hand  */
+  public static final int NUM_FINGERS = 5;
 }
