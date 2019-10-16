@@ -14,8 +14,9 @@ public class Calculator {
 	}
 	
 	// Feature set R
-	public static double getPalmSphereRadius(Hand hand) {
-		return hand.sphereRadius();
+	public static float getPalmSphereRadius(Frame frame) {
+		HandList hands = frame.hands();
+		return hands.get(0).sphereRadius();
 	}
 	
 	// Feature set SD
@@ -48,9 +49,10 @@ public class Calculator {
 		HandList handsInFrame = frame.hands();
 		Vector palmCenter = handsInFrame.get(0).palmPosition();
 		
-		// get all 10 distances (palm to each finger tip)
-		double[] distances = {};
-		for(int i = 0; i < 10; i++) {
+		// get all 5 distances (palm to each finger tip)
+		double[] distances = new double[Constants.NUM_FINGERS];
+		System.out.println(fingers.length);
+		for(int i = 0; i < Constants.NUM_FINGERS; i++) {
 			Vector finger = fingers[i];
 			distances[i] = palmCenter.distanceTo(finger);
 			System.out.println("Point" + i + " to Palm" + ": " + distances[i]);
@@ -77,7 +79,7 @@ public class Calculator {
 		}
 		
 		// get all 10 distances (palm to each finger tip)
-		double[] distances = {};
+		double[] distances = new double[Constants.NUM_FINGER_DISTANCES];
 		for(int i = 0; i < Constants.NUM_FINGERS; i++) {
 			for(int j = i+1; j < Constants.NUM_FINGERS; j++) {
 				Vector finger1 = fingers[i];
@@ -112,7 +114,7 @@ public class Calculator {
 		Vector middle = fingers.get(Finger.Type.TYPE_MIDDLE);
 		Vector ring = fingers.get(Finger.Type.TYPE_RING);
 		Vector pinky = fingers.get(Finger.Type.TYPE_PINKY);
-		double[] angles = {};
+		double[] angles = new double[Constants.NUM_FINGERS];
 		// thumb to index
 		angles[0] = thumb.angleTo(index);
 		// index to middle

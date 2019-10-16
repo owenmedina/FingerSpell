@@ -3,6 +3,8 @@ import com.leapmotion.leap.Gesture.State;
 import com.opencsv.CSVWriter;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.Scanner;
 public class LeapListener extends Listener {
 	public void onInit (Controller controller) {
 		System.out.println("Initialized");
@@ -22,25 +24,27 @@ public class LeapListener extends Listener {
 	
 	// What to do with each frame ("photo" of the hand/s)
 	// Each frame has data on the hand, fingers and bones
-	public void onFrame (Controller controller) {
+//	public void onFrame (Controller controller) {
 //		Frame frame = controller.frame();
-//		for (Finger finger : frame.fingers()) {
-//			System.out.println("Finger type: " + finger.type()
-//								+ " ID: " + finger.id()
-//								+ " Finger Length (mm): " + finger.length()
-//								+ " Finger Width (mm): " + finger.width()
-//								);
-//			
-//			for (Bone.Type boneType : Bone.Type.values()) {
-//				Bone bone = finger.bone(boneType);
-//				System.out.println("Bone Type: " + bone.type()
-//									+ " Start: " + bone.prevJoint()
-//									+ " End: " + bone.nextJoint()
-//									+ " Direction: " + bone.direction()
-//									);
-//			}
-//		}
-	}
+////		for (Finger finger : frame.fingers()) {
+////			System.out.println("Finger type: " + finger.type()
+////								+ " ID: " + finger.id()
+////								+ " Finger Length (mm): " + finger.length()
+////								+ " Finger Width (mm): " + finger.width()
+////								);
+////			
+////			for (Bone.Type boneType : Bone.Type.values()) {
+////				Bone bone = finger.bone(boneType);
+////				System.out.println("Bone Type: " + bone.type()
+////									+ " Start: " + bone.prevJoint()
+////									+ " End: " + bone.nextJoint()
+////									+ " Direction: " + bone.direction()
+////									);
+////			}
+////		}
+//		HandList hands = frame.hands();
+//		System.out.println(hands.get(0).sphereRadius());
+//	}
 	
 	public int[] getEuclidDistances(Frame frame) {
 		int[] distances = new int[Constants.NUM_DISTANCES];
@@ -187,6 +191,69 @@ public class LeapListener extends Listener {
 			
 			//write the coordinates as one row in the csv
 			writer.writeNext(coordinates);
+			
+
+			// closing writer connection 
+			writer.close(); 
+		} 
+		catch (IOException e) { 
+			// TODO Auto-generated catch block 
+			e.printStackTrace(); 
+		} 
+	}
+	
+	public void createFeaturesCSVFile(String fileName, Frame frame) { 
+		// first create file object for file placed at location 
+		// specified by filepath 
+		Calculator calculator = new Calculator();
+		File file = new File(fileName); 
+		try { 
+			// create FileWriter object with file as parameter 
+			FileWriter outputfile = new FileWriter(file); 
+
+			// create CSVWriter object filewriter object as parameter 
+			CSVWriter writer = new CSVWriter(outputfile); 
+
+			// adding header to csv 
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Enter gesture name: ");
+			String name = sc.next();
+			System.out.println(frame.hands().count());
+			Hand hand = frame.hand(0);
+			
+			//test if feature set is done properly
+			float featureR = calculator.getPalmSphereRadius(frame);
+			double[] featureD = calculator.getPalmFingerDistances(frame);
+			double[] featureL = calculator.getFingerDistances(frame);
+			double[] featureA = calculator.getFingerAngles(frame);
+			//palm SD
+			float palmX = hand.palmPosition().getX();
+			float palmY = hand.palmPosition().getY();
+			float palmZ = hand.palmPosition().getZ();
+			double[] x = new double[1];
+			double[] y = new double[1];
+			double[] z = new double[1];
+			x[0] = palmX;
+			y[0] = palmY;
+			z[0] = palmZ;
+			double[] featureS = calculator.getSDPalmPosition(x, y, z);
+			
+			System.out.println("Sphere Radius: " + featureR);
+			System.out.println("Palm-Finger Distances " + featureD.toString());
+			System.out.println("Finger Distances: " + featureL.toString());
+			System.out.println("Finger Angles: " + featureA.toString());
+			System.out.println("Palm SD: " + featureS.toString());
+			
+			String[] features =  new String[6];
+			features[0] = name;
+			features[1] = Arrays.toString(featureS);
+			features[2] = featureR + "";
+			features[3] = Arrays.toString(featureD);
+			features[4] = Arrays.toString(featureA);
+			features[5] = Arrays.toString(featureL);
+			
+			//write the coordinates as one row in the csv
+			writer.writeNext(features);
 			
 
 			// closing writer connection 

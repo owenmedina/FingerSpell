@@ -40,7 +40,15 @@ public class LeapController {
 			Frame frame = controller.frame();
 			String fileName = "Coordinates.csv";
 			listener.createCoordinatesCSVFile(fileName,frame);
+		}else if(input.equals("t")) {
+
+			Frame frame = controller.frame();
+
+			String fileName = "FeatureSet.csv";
+
 			
+			listener.createFeaturesCSVFile(fileName,frame);
+
 		}
 				
 //		try {
