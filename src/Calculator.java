@@ -80,12 +80,13 @@ public class Calculator {
 		
 		// get all 10 distances (palm to each finger tip)
 		double[] distances = new double[Constants.NUM_FINGER_DISTANCES];
+		int iDistances = 0;
 		for(int i = 0; i < Constants.NUM_FINGERS; i++) {
 			for(int j = i+1; j < Constants.NUM_FINGERS; j++) {
 				Vector finger1 = fingers[i];
 				Vector finger2 = fingers[j];
-				distances[i] = finger2.distanceTo(finger1);
-				System.out.println("Point" + i + " to Point" + j + ": " + distances[i]);
+				distances[iDistances++] = finger2.distanceTo(finger1);
+				System.out.println("Point" + i + " to Point" + j + ": " + distances[iDistances-1]);
 			}
 		}
 		return distances;

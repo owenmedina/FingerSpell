@@ -147,6 +147,8 @@ public class LeapListener extends Listener {
 								"m_TipX", "m_TipY", "m_TipZ", 
 								"r_ProxX", "r_ProxY", "r_ProxZ",
 								"r_TipX", "r_TipY", "r_TipZ", 
+								"p_ProxX", "p_ProxY", "p_ProxZ",
+								"p_TipX", "p_TipY", "p_TipZ",
 								"pcX", "pcY", "pcZ" }; 
 			writer.writeNext(header); 
 			
@@ -202,22 +204,20 @@ public class LeapListener extends Listener {
 		} 
 	}
 	
-	public void createFeaturesCSVFile(String fileName, Frame frame) { 
+	public void createFeaturesCSVFile(String fileName, Frame frame, String name, int counter) { 
 		// first create file object for file placed at location 
 		// specified by filepath 
 		Calculator calculator = new Calculator();
 		File file = new File(fileName); 
 		try { 
 			// create FileWriter object with file as parameter 
-			FileWriter outputfile = new FileWriter(file); 
+			FileWriter outputfile = new FileWriter(file,true ); 
 
 			// create CSVWriter object filewriter object as parameter 
 			CSVWriter writer = new CSVWriter(outputfile); 
 
 			// adding header to csv 
-			Scanner sc = new Scanner(System.in);
-			System.out.println("Enter gesture name: ");
-			String name = sc.next();
+			
 			System.out.println(frame.hands().count());
 			Hand hand = frame.hand(0);
 			
@@ -239,18 +239,37 @@ public class LeapListener extends Listener {
 			double[] featureS = calculator.getSDPalmPosition(x, y, z);
 			
 			System.out.println("Sphere Radius: " + featureR);
-			System.out.println("Palm-Finger Distances " + featureD.toString());
-			System.out.println("Finger Distances: " + featureL.toString());
-			System.out.println("Finger Angles: " + featureA.toString());
-			System.out.println("Palm SD: " + featureS.toString());
+			System.out.println("Palm-Finger Distances " + Arrays.toString(featureD));
+			System.out.println("Finger Distances: " + Arrays.toString(featureL));
+			System.out.println("Finger Angles: " + Arrays.toString(featureA));
+			System.out.println("Palm SD: " + Arrays.toString(featureS));
 			
-			String[] features =  new String[6];
-			features[0] = name;
-			features[1] = Arrays.toString(featureS);
-			features[2] = featureR + "";
-			features[3] = Arrays.toString(featureD);
-			features[4] = Arrays.toString(featureA);
-			features[5] = Arrays.toString(featureL);
+			String[] features =  new String[25];
+			int iFeatures = 0;
+			features[iFeatures++] = name + Integer.toString(counter);//1
+			for(int i = 0; i < 3; i++) {
+				features[iFeatures++] = featureS[i] + "";
+			}
+			features[iFeatures++] = featureR + "";//1
+			for(int i = 0; i < 5; i++) {
+				features[iFeatures++] = featureD[i] + "";
+			}
+			for(int i = 0; i < 5; i++) {
+				features[iFeatures++] = featureA[i] + "";
+			}
+			for(int i = 0; i < 10; i++) {
+				features[iFeatures++] = featureL[i] + "";
+			}
+			
+			// adding header to csv 
+			if(counter == 0) {
+				String[] header = { "name","SDx","SDy","SDz","SR","PFD_t",
+						"PFD_i","PFD_m","PFD_r","PFD_p","FA_ti","FA_im",
+						"FA_mr","FA_rp","FA_pt","FD_ti","FD_tm","FD_tr",
+						"FD_tp","FD_im","FD_ir","FD_ip","FD_mr","FD_mp","FD_rp" }; 
+				writer.writeNext(header); 
+			}
+						
 			
 			//write the coordinates as one row in the csv
 			writer.writeNext(features);
