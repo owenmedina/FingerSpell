@@ -36,7 +36,24 @@ public class LeapController {
 				input = sc.next();
 			}
 			
+		}else if(input.equals("c")) {
+			Frame frame = controller.frame();
+			String fileName = "Coordinates.csv";
+			listener.createCoordinatesCSVFile(fileName,frame);
+		}else if(input.equals("t")) {
+			System.out.println("Enter gesture name: ");
+			String name = sc.next();
+			int counter = 0;
+			for(int i = 0; i < 50; i++) {
+				Frame frame = controller.frame();
+				String fileName = "FeatureSet.csv";				
+				listener.createFeaturesCSVFile(fileName,frame,name,counter);
+				counter++;
+			}
+			
+
 		}
+				
 //		try {
 //			System.in.read();
 //		} catch (IOException e) {
