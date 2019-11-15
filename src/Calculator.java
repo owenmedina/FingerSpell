@@ -149,4 +149,21 @@ public class Calculator {
         
         return Math.sqrt(standardDeviation/size);
 	}
+
+	public static double max(double[] array) {
+		double maximum = 0.0;
+		for(double elem : array) {
+			if(maximum < elem) maximum = elem;
+		}
+		return maximum;
+	}
+	
+	public static double[] scaleFeatures(double[] features) {
+		double max = max(features);
+		int size = features.length;
+		for(int i = 0; i < size; i++) {
+			features[i] /= max;
+		}
+		return features;
+	}
 }
