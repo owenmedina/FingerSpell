@@ -207,7 +207,7 @@ public class LeapListener extends Listener {
 	public void createFeaturesCSVFile(String fileName, Frame frame, String name, int counter) { 
 		// first create file object for file placed at location 
 		// specified by filepath 
-		Calculator calculator = new Calculator();
+		
 		File file = new File(fileName); 
 		try { 
 			// create FileWriter object with file as parameter 
@@ -219,47 +219,7 @@ public class LeapListener extends Listener {
 			// adding header to csv 
 			
 			System.out.println(frame.hands().count());
-			Hand hand = frame.hand(0);
 			
-			//test if feature set is done properly
-			float featureR = calculator.getPalmSphereRadius(frame);
-			double[] featureD = calculator.getPalmFingerDistances(frame);
-			double[] featureL = calculator.getFingerDistances(frame);
-			double[] featureA = calculator.getFingerAngles(frame);
-			//palm SD
-			float palmX = hand.palmPosition().getX();
-			float palmY = hand.palmPosition().getY();
-			float palmZ = hand.palmPosition().getZ();
-			double[] x = new double[1];
-			double[] y = new double[1];
-			double[] z = new double[1];
-			x[0] = palmX;
-			y[0] = palmY;
-			z[0] = palmZ;
-			double[] featureS = calculator.getSDPalmPosition(x, y, z);
-			
-			System.out.println("Sphere Radius: " + featureR);
-			System.out.println("Palm-Finger Distances " + Arrays.toString(featureD));
-			System.out.println("Finger Distances: " + Arrays.toString(featureL));
-			System.out.println("Finger Angles: " + Arrays.toString(featureA));
-			System.out.println("Palm SD: " + Arrays.toString(featureS));
-			
-			String[] features =  new String[25];
-			int iFeatures = 0;
-			features[iFeatures++] = name + Integer.toString(counter);//1
-			for(int i = 0; i < 3; i++) {
-				features[iFeatures++] = featureS[i] + "";
-			}
-			features[iFeatures++] = featureR + "";//1
-			for(int i = 0; i < 5; i++) {
-				features[iFeatures++] = featureD[i] + "";
-			}
-			for(int i = 0; i < 5; i++) {
-				features[iFeatures++] = featureA[i] + "";
-			}
-			for(int i = 0; i < 10; i++) {
-				features[iFeatures++] = featureL[i] + "";
-			}
 			
 			// adding header to csv 
 			if(counter == 0) {
@@ -272,16 +232,111 @@ public class LeapListener extends Listener {
 						
 			
 			//write the coordinates as one row in the csv
+			String[] features = getFeatures(name, counter,0, frame);
 			writer.writeNext(features);
 			
-
 			// closing writer connection 
 			writer.close(); 
+
 		} 
 		catch (IOException e) { 
 			// TODO Auto-generated catch block 
 			e.printStackTrace(); 
+
 		} 
+		
+	}
+	
+	public String[] getFeatures(String name, int counter, int flag, Frame frame) {
+		Calculator calculator = new Calculator();
+		Hand hand = frame.hand(0);
+		
+		//test if feature set is done properly
+		float featureR = calculator.getPalmSphereRadius(frame);
+		double[] featureD = calculator.getPalmFingerDistances(frame);
+		double[] featureL = calculator.getFingerDistances(frame);
+		double[] featureA = calculator.getFingerAngles(frame);
+		//palm SD
+		float palmX = hand.palmPosition().getX();
+		float palmY = hand.palmPosition().getY();
+		float palmZ = hand.palmPosition().getZ();
+		double[] x = new double[1];
+		double[] y = new double[1];
+		double[] z = new double[1];
+		x[0] = palmX;
+		y[0] = palmY;
+		z[0] = palmZ;
+		double[] featureS = calculator.getSDPalmPosition(x, y, z);
+		
+		System.out.println("Sphere Radius: " + featureR);
+		System.out.println("Palm-Finger Distances " + Arrays.toString(featureD));
+		System.out.println("Finger Distances: " + Arrays.toString(featureL));
+		System.out.println("Finger Angles: " + Arrays.toString(featureA));
+		System.out.println("Palm SD: " + Arrays.toString(featureS));
+		
+		String[] features =  new String[24];
+		int iFeatures = 0;
+		//if(flag == 0) features[iFeatures++] = name + Integer.toString(counter);//1
+		for(int i = 0; i < 3; i++) {
+			features[iFeatures++] = featureS[i] + "";
+		}
+		features[iFeatures++] = featureR + "";//1
+		for(int i = 0; i < 5; i++) {
+			features[iFeatures++] = featureD[i] + "";
+		}
+		for(int i = 0; i < 5; i++) {
+			features[iFeatures++] = featureA[i] + "";
+		}
+		for(int i = 0; i < 10; i++) {
+			features[iFeatures++] = featureL[i] + "";
+		}
+		return features;
+	}
+	
+	public double[] getFeaturesDouble(String name, int counter, int flag, Frame frame) {
+		Calculator calculator = new Calculator();
+		Hand hand = frame.hand(0);
+		
+		//test if feature set is done properly
+		float featureR = calculator.getPalmSphereRadius(frame);
+		double[] featureD = calculator.getPalmFingerDistances(frame);
+		double[] featureL = calculator.getFingerDistances(frame);
+		double[] featureA = calculator.getFingerAngles(frame);
+		//palm SD
+		float palmX = hand.palmPosition().getX();
+		float palmY = hand.palmPosition().getY();
+		float palmZ = hand.palmPosition().getZ();
+		double[] x = new double[1];
+		double[] y = new double[1];
+		double[] z = new double[1];
+		x[0] = palmX;
+		y[0] = palmY;
+		z[0] = palmZ;
+		double[] featureS = calculator.getSDPalmPosition(x, y, z);
+		
+		System.out.println("Sphere Radius: " + featureR);
+		System.out.println("Palm-Finger Distances " + Arrays.toString(featureD));
+		System.out.println("Finger Distances: " + Arrays.toString(featureL));
+		System.out.println("Finger Angles: " + Arrays.toString(featureA));
+		System.out.println("Palm SD: " + Arrays.toString(featureS));
+		
+		double[] features =  new double[24];
+		int iFeatures = 0;
+		//if(flag == 0) features[iFeatures++] = name + Integer.toString(counter);//1
+		for(int i = 0; i < 3; i++) {
+			features[iFeatures++] = featureS[i];
+		}
+		features[iFeatures++] = featureR;//1
+		for(int i = 0; i < 5; i++) {
+			features[iFeatures++] = featureD[i];
+		}
+		for(int i = 0; i < 5; i++) {
+			features[iFeatures++] = featureA[i];
+		}
+		for(int i = 0; i < 10; i++) {
+			features[iFeatures++] = featureL[i];
+		}
+		return features;
 	}
 
 }
