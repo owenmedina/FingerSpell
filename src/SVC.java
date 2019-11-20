@@ -153,12 +153,12 @@ class SVC {
         int classVal = -1, classIdx = -1;
         for (int i = 0, l = amounts.length; i < l; i++) {
             if (amounts[i] > classVal) {
-            	System.out.println(amounts[i] + " " + classVal + " " + i);
+            	//System.out.println(amounts[i] + " " + classVal + " " + i);
                 classVal = amounts[i];
                 classIdx= i;
             }
         }
-        System.out.println(Arrays.toString(this.classes));
+        //System.out.println(Arrays.toString(this.classes));
         return this.classes[classIdx];
     
     }
@@ -181,7 +181,8 @@ class SVC {
             // Prediction:
             SVC clf = new SVC(24, 24, vectors, coefficients, intercepts, weights, "poly", (double)1/args.length, 0.0, 3);
             int estimation = clf.predict(features);
-            System.out.println(estimation);
+            //System.out.println(intercepts.length);
+            System.out.println("Prediction "+ (char) (estimation+65));
 
         }
     }
