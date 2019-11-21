@@ -274,8 +274,9 @@ public class LeapListener extends Listener {
 //		System.out.println("Finger Angles: " + Arrays.toString(featureA));
 //		System.out.println("Palm SD: " + Arrays.toString(featureS));
 		
-		String[] features =  new String[24];
+		String[] features =  new String[25];
 		int iFeatures = 0;
+		features[iFeatures++] = name;
 		//if(flag == 0) features[iFeatures++] = name + Integer.toString(counter);//1
 		for(int i = 0; i < 3; i++) {
 			features[iFeatures++] = featureS[i] + "";

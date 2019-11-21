@@ -164,11 +164,11 @@ class SVC {
     }
 
     public static void main(String[] args) {
-        if (args.length == 24) {
+        if (args.length == 25) {
         	
             // Features:
             double[] features = new double[args.length];
-            for (int i = 0, l = args.length; i < l; i++) {
+            for (int i = 1, l = args.length; i < l; i++) {
                 features[i] = Double.parseDouble(args[i]);
             }
 
