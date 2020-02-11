@@ -20,27 +20,31 @@ public class LeapController {
 		
 		Scanner sc = new Scanner(System.in);
 		String input = sc.next();
-//		if(input.equals("s")) {
-//			Frame frame = controller.frame();
-//			int[] distances = listener.getEuclidDistances(frame);
-//			String name = sc.nextLine();
-//			db.insertSample(name, distances);
-//			System.out.println("Snapshot taken");
-//		}else if(input.equals("f")) {
-//			while( !input.equals("exit")) {
-//				System.out.println("Enter gesture name: ");
-//				String name = sc.next();
-//				int[] distances = db.selectGesture(name);
-//				System.out.println(distances.length);
-//				System.out.println(calculator.frobNorm(distances));
-//				input = sc.next();
-//			}
-//			
-//		}else if(input.equals("c")) {
-//			Frame frame = controller.frame();
-//			String fileName = "Coordinates.csv";
-//			listener.createCoordinatesCSVFile(fileName,frame);
-//		}else 
+		if(input.equals("s")) {
+			Frame frame = controller.frame();
+			int[] distances = listener.getEuclidDistances(frame);
+			String name = sc.nextLine();
+			db.insertSample(name, distances);
+			System.out.println("Snapshot taken");
+		}else if(input.equals("f")) {
+			while( !input.equals("exit")) {
+				System.out.println("Enter gesture name: ");
+				String name = sc.next();
+				int[] distances = db.selectGesture(name);
+				System.out.println(distances.length);
+		
+				
+		
+		
+				System.out.println(calculator.frobNorm(distances));
+				input = sc.next();
+			}
+			
+		}else if(input.equals("c")) {
+			Frame frame = controller.frame();
+			String fileName = "Coordinates.csv";
+			listener.createCoordinatesCSVFile(fileName,frame);
+		}else 
 		if(input.equals("t")) {
 			while(!input.equals("exit")) {
 				System.out.println("Enter gesture name: ");
@@ -48,7 +52,7 @@ public class LeapController {
 				int counter = 0;
 				for(int i = 0; i < 50; i++) {
 					Frame frame = controller.frame();
-					String fileName = "TestBrian.csv";				
+					String fileName = "EGT.csv";				
 					listener.createFeaturesCSVFile(fileName,frame,name,counter);
 					counter++;
 				}
@@ -56,12 +60,13 @@ public class LeapController {
 			
 		}
 		else 
+			
 		if(input.equals("z")) {
 			int counter = 0;
 			while(!input.equals("p")) {
 				Frame frame = controller.frame();
 				String[] features =  listener.getFeatures(frame);
-				System.out.println("Features: " + Arrays.toString(features));
+				//System.out.println("Features: " + Arrays.toString(features));
 				//System.out.println(features.length);
 				//double[] feats = {0,0,0,79.035675,96.25945282,105.1138992,99.97422791,85.44957733,56.00112915,0.100621864,0.074714035,0.101935335,0.105789557,0.19114764,25.09286308,49.03758621,72.50086212,94.0956955,29.24085808,58.57175827,107.0080566,32.00622177,103.8028564,95.56828308};
 				//System.out.println("test1");
@@ -70,7 +75,7 @@ public class LeapController {
 				    s[i] = String.valueOf(features[i]);
 				//System.out.println("test2");
 				SVC_Brian.main(s);
-				System.out.println(counter++);
+				//System.out.println(counter++);
 				//System.out.println("test3");
 			}
 			

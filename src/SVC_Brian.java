@@ -163,7 +163,7 @@ class SVC_Brian {
 
     public static void main(String[] args) {
         if (args.length == 25) {
-        	System.out.println("hi");
+        	//System.out.println("hi");
             // Features:
             double[] features = new double[args.length];
             for (int i = 1, l = args.length; i < l; i++) {
@@ -186,7 +186,9 @@ class SVC_Brian {
             SVC_Brian clf = new SVC_Brian(23, 23, vectors, coefficients, intercepts, weights, "poly", (double)1/args.length, 0.0, 10);
             int estimation = clf.predict(features);
             //System.out.println(intercepts.length);
-            System.out.println("Prediction "+ (char) (estimation+65));
+            if( estimation >= 15  ) estimation+=2;
+            else if( estimation >= 9) estimation++;
+            System.out.println("Prediction "+ (char) (estimation+65) + " " + estimation);
 
         }
     }
