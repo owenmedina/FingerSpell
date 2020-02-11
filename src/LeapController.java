@@ -28,6 +28,7 @@ public class LeapController {
 			System.out.println("Snapshot taken");
 		}else if(input.equals("f")) {
 			while( !input.equals("exit")) {
+				int [][] res = db.selectAllGestures();
 				System.out.println("Enter gesture name: ");
 				String name = sc.next();
 				int[] distances = db.selectGesture(name);

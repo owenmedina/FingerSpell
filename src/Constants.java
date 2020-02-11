@@ -3,6 +3,8 @@ public final class Constants  {
 
   /** Number of distances of interest per gesture  */
   public static final int NUM_DISTANCES = 55;
+  /** Number of letters  */
+  public static final int NUM_LETTERS = 24;
   /** Number of points of interest on a hand  */
   public static final int NUM_POINTS = 11;
   /** Number of distances between each pair of fingers  */
