@@ -37,6 +37,43 @@ public class Calculator {
 		return scaleFactor3;
 	}
 	
+	public static int[] scaleGesture(int[] sample, double scaleFactor) {
+		int[] scaled = new int[Constants.NUM_DISTANCES];
+		for(int i = 0; i < Constants.NUM_DISTANCES; i++){
+			scaled[i] = (int) Math.floor(sample[i]/scaleFactor);
+		}
+		return scaled;
+	}
+	
+	public static int[] getDifferenceArray(int[] sample, int[] db) {
+		int[] difference = new int[Constants.NUM_DISTANCES];
+		for(int i = 0; i < Constants.NUM_DISTANCES; i++) {
+			difference[i] = Math.abs(sample[i] - db[i]);
+		}
+		return difference;
+	}
+	
+	public static double MetricOfSimilarity(int[] sample, int[] db) {
+		double mos = 0;
+		int[] differenceArray = getDifferenceArray(sample, db);
+		mos = frobNorm(differenceArray);
+		return mos;
+	}
+	
+	public static int getMinMOS(int[] sample, LeapDB db) {
+		int indexOfMinMOS = -1;
+		double minMOS = Double.MAX_VALUE;
+		int[][] allGestures = db.selectAllGestures();
+		for(int i = 0; i < Constants.NUM_LETTERS; i++) {
+			double currMOS = MetricOfSimilarity(sample, allGestures[i]);
+			if(currMOS < minMOS) {
+				indexOfMinMOS = i;
+				minMOS = currMOS;
+			}
+		}
+		return indexOfMinMOS;
+	}
+	
 	// Feature set R
 	public static float getPalmSphereRadius(Frame frame) {
 		HandList hands = frame.hands();
