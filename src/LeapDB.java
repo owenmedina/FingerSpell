@@ -24,7 +24,7 @@ public class LeapDB {
 			
 			//establish connection
 			String user = "root" ;
-			String pw = "brianowen" ;
+			String pw = "" ;
 			Connection conn = DriverManager.getConnection(url, user, pw);
 			System.out.println("Connected successfully."); //tester
 			return conn;
@@ -133,6 +133,35 @@ public static int[] selectGesture(String name) throws Exception{
 				String num = result.getString(i);
 				System.out.println(num);
 				results[i-2] = Integer.parseInt(num);
+			}
+			
+			
+			System.out.println("Select from gestures success"); //tester;
+		}catch(Exception e) {
+			System.out.println("Error in selectGesture " + e); //in case of any errors;
+		}
+		finally{
+		}
+		return results;
+	}
+	public static int[][] selectAllGestures() throws Exception{
+		System.out.println("entered SAG");
+		int[][] results = new int[Constants.NUM_LETTERS][Constants.NUM_DISTANCES];
+		// inserts a sample of a gesture in the gestures table
+		try{
+			// first inner array is for the x, y and z of the tip of the finger
+			// second inner array is for the x, y and z of the proximal joint of the finger
+			PreparedStatement command = con.prepareStatement("SELECT * from gestures WHERE name != '" + "5" + "'");
+			ResultSet result = command.executeQuery();
+	                    
+			int ctr = 0;
+			while(result.next()) {
+				for(int i = 2; i <= Constants.NUM_DISTANCES + 1; i++) {
+					String num = result.getString(i);
+					System.out.println(num);
+					results[ctr][i-2] = Integer.parseInt(num);
+				}
+				ctr++;
 			}
 			
 			
