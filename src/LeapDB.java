@@ -24,7 +24,7 @@ public class LeapDB {
 			
 			//establish connection
 			String user = "root" ;
-			String pw = "brianowen" ;
+			String pw = "" ;
 			Connection conn = DriverManager.getConnection(url, user, pw);
 			System.out.println("Connected successfully."); //tester
 			return conn;

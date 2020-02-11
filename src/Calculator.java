@@ -13,6 +13,30 @@ public class Calculator {
 		return Math.sqrt(sum);
 	}
 	
+	public static double scaleGesture1(int[] sample, int[] db) {
+		double scaleFactor1 = 0;
+		double frobNormSample = frobNorm(sample);
+		double frobNormDB = frobNorm(db);
+		scaleFactor1 = frobNormSample/frobNormDB;
+		return scaleFactor1;
+	}
+	
+	public static double scaleGesture2(int[] sample, int[] db) {
+		double scaleFactor2 = 0;
+		int tTipToPCSample = sample[Constants.INDEX_TTIP_PC];
+		int tTipToPCDB = db[Constants.INDEX_TTIP_PC];
+		scaleFactor2 = tTipToPCSample/tTipToPCDB;
+		return scaleFactor2;
+	}
+	
+	public static double scaleGesture3(int[] sample, int[] db) {
+		double scaleFactor3 = 0;
+		int mTipToPCSample = sample[Constants.INDEX_MTIP_PC];
+		int mTipToPCDB = db[Constants.INDEX_MTIP_PC];
+		scaleFactor3 = mTipToPCSample/mTipToPCDB;
+		return scaleFactor3;
+	}
+	
 	// Feature set R
 	public static float getPalmSphereRadius(Frame frame) {
 		HandList hands = frame.hands();
