@@ -232,7 +232,7 @@ public class LeapListener extends Listener {
 						
 			
 			//write the coordinates as one row in the csv
-			String[] features = getFeatures(name, counter,0, frame);
+			String[] features = getFeatures(name, frame);
 			writer.writeNext(features);
 			
 			// closing writer connection 
@@ -247,7 +247,7 @@ public class LeapListener extends Listener {
 		
 	}
 	
-	public String[] getFeatures(String name, int counter, int flag, Frame frame) {
+	public String[] getFeatures(String name, Frame frame) {
 		Calculator calculator = new Calculator();
 		Hand hand = frame.hand(0);
 		
@@ -268,14 +268,15 @@ public class LeapListener extends Listener {
 		z[0] = palmZ;
 		double[] featureS = calculator.getSDPalmPosition(x, y, z);
 		
-		System.out.println("Sphere Radius: " + featureR);
-		System.out.println("Palm-Finger Distances " + Arrays.toString(featureD));
-		System.out.println("Finger Distances: " + Arrays.toString(featureL));
-		System.out.println("Finger Angles: " + Arrays.toString(featureA));
-		System.out.println("Palm SD: " + Arrays.toString(featureS));
+//		System.out.println("Sphere Radius: " + featureR);
+//		System.out.println("Palm-Finger Distances " + Arrays.toString(featureD));
+//		System.out.println("Finger Distances: " + Arrays.toString(featureL));
+//		System.out.println("Finger Angles: " + Arrays.toString(featureA));
+//		System.out.println("Palm SD: " + Arrays.toString(featureS));
 		
-		String[] features =  new String[24];
+		String[] features =  new String[25];
 		int iFeatures = 0;
+		features[iFeatures++] = name;
 		//if(flag == 0) features[iFeatures++] = name + Integer.toString(counter);//1
 		for(int i = 0; i < 3; i++) {
 			features[iFeatures++] = featureS[i] + "";
@@ -292,6 +293,13 @@ public class LeapListener extends Listener {
 		}
 		return features;
 	}
+	
+	public String[] getFeatures(Frame frame) {
+		String defaultName = "letter";
+		return getFeatures(defaultName,frame);
+		
+	}
+	
 	
 	public double[] getFeaturesDouble(String name, int counter, int flag, Frame frame) {
 		Calculator calculator = new Calculator();

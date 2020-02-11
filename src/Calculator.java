@@ -34,16 +34,16 @@ public class Calculator {
 		Vector[] fingers = new Vector[Constants.NUM_FINGERS];
 		int indexFingers = 0;
 		for (Finger finger : frame.fingers()) {
-			System.out.println("Finger type: " + finger.type()
-								+ " ID: " + finger.id()
-								+ " Finger Length (mm): " + finger.length()
-								+ " Finger Width (mm): " + finger.width()
-								);
+//			System.out.println("Finger type: " + finger.type()
+//								+ " ID: " + finger.id()
+//								+ " Finger Length (mm): " + finger.length()
+//								+ " Finger Width (mm): " + finger.width()
+//								);
 
 			Bone tip = finger.bone(Bone.Type.TYPE_DISTAL);
-			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
-								+ " End: " + tip.nextJoint()
-								);
+//			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
+//								+ " End: " + tip.nextJoint()
+//								);
 			fingers[indexFingers++] = tip.nextJoint();
 		}
 		HandList handsInFrame = frame.hands();
@@ -51,11 +51,11 @@ public class Calculator {
 		
 		// get all 5 distances (palm to each finger tip)
 		double[] distances = new double[Constants.NUM_FINGERS];
-		System.out.println(fingers.length);
+		//System.out.println(fingers.length);
 		for(int i = 0; i < Constants.NUM_FINGERS; i++) {
 			Vector finger = fingers[i];
 			distances[i] = palmCenter.distanceTo(finger);
-			System.out.println("Point" + i + " to Palm" + ": " + distances[i]);
+			//System.out.println("Point" + i + " to Palm" + ": " + distances[i]);
 		}
 		return distances;
 	}
@@ -65,16 +65,16 @@ public class Calculator {
 		Vector[] fingers = new Vector[Constants.NUM_FINGERS];
 		int indexFingers = 0;
 		for (Finger finger : frame.fingers()) {
-			System.out.println("Finger type: " + finger.type()
-								+ " ID: " + finger.id()
-								+ " Finger Length (mm): " + finger.length()
-								+ " Finger Width (mm): " + finger.width()
-								);
+//			System.out.println("Finger type: " + finger.type()
+//								+ " ID: " + finger.id()
+//								+ " Finger Length (mm): " + finger.length()
+//								+ " Finger Width (mm): " + finger.width()
+//								);
 
 			Bone tip = finger.bone(Bone.Type.TYPE_DISTAL);
-			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
-								+ " End: " + tip.nextJoint()
-								);
+//			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
+//								+ " End: " + tip.nextJoint()
+//								);
 			fingers[indexFingers++] = tip.nextJoint();
 		}
 		
@@ -86,7 +86,7 @@ public class Calculator {
 				Vector finger1 = fingers[i];
 				Vector finger2 = fingers[j];
 				distances[iDistances++] = finger2.distanceTo(finger1);
-				System.out.println("Point" + i + " to Point" + j + ": " + distances[iDistances-1]);
+				//System.out.println("Point" + i + " to Point" + j + ": " + distances[iDistances-1]);
 			}
 		}
 		return distances;
@@ -96,16 +96,16 @@ public class Calculator {
 	public static double[] getFingerAngles(Frame frame) {
 		HashMap<Type, Vector> fingers = new HashMap<Type, Vector>();
 		for (Finger finger : frame.fingers()) {
-			System.out.println("Finger type: " + finger.type()
-								+ " ID: " + finger.id()
-								+ " Finger Length (mm): " + finger.length()
-								+ " Finger Width (mm): " + finger.width()
-								);
+//			System.out.println("Finger type: " + finger.type()
+//								+ " ID: " + finger.id()
+//								+ " Finger Length (mm): " + finger.length()
+//								+ " Finger Width (mm): " + finger.width()
+//								);
 
 			Bone tip = finger.bone(Bone.Type.TYPE_DISTAL);
-			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
-								+ " End: " + tip.nextJoint()
-								);
+//			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
+//								+ " End: " + tip.nextJoint()
+//								);
 			fingers.put(finger.type(), tip.nextJoint());
 		}
 		
