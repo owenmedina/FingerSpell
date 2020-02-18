@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.List;
 
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Finger.Type;
@@ -72,6 +73,57 @@ public class Calculator {
 			}
 		}
 		return indexOfMinMOS;
+	}
+	
+	// may not be usable
+	public static double[] interquartileRange(double[] values) {
+		double[] ranges = new double[2];
+		int size = values.length;
+		double Q1;
+		double Q3;
+		
+		// sort values in ascending order
+		
+		// Find Q1 and Q3
+		double median;
+		int sizeOfQuartiles;
+		if(size % 2 == 0) sizeOfQuartiles = size/2;
+		else sizeOfQuartiles = (size-1)/2; // think of this as removing the median and getting the two sets before and after it
+		
+		int indexOfIQs = sizeOfQuartiles/2;
+		if(sizeOfQuartiles % 2 == 0) {
+			Q1 = (values[indexOfIQs]+values[indexOfIQs-1])/2;
+			Q3 = (values[sizeOfQuartiles+indexOfIQs]+values[sizeOfQuartiles+indexOfIQs])/2;
+		}
+		else {
+			Q1 = values[indexOfIQs];
+			Q3 = values[sizeOfQuartiles+indexOfIQs];
+		}
+		
+		double IQ = Q3-Q1;
+		double boundary = IQ * 1.5;
+		double lowerBoundary = Q1 - boundary; // what if Q1 is smaller than the boundary?
+		double upperBoundary = Q3 + boundary;
+		ranges[0] = lowerBoundary;
+		ranges[1] = upperBoundary;
+		
+		return ranges;
+	}
+	
+	// Average all the samples for a single gesture
+	public static void averageSamples(String name, LeapDB db) throws Exception {
+		List<int[]> allSamples = db.selectAllSamplesForGesture(name);
+		int[] averageDistances = new int[Constants.NUM_DISTANCES];
+		int numSamples = allSamples.size();
+		for(int i = 0; i < Constants.NUM_DISTANCES; i++) {
+			int total = 0;
+			for(int[] arr : allSamples) {
+				total += arr[i];
+			}
+			averageDistances[i] = (int) Math.floor(total/numSamples);
+		}
+		
+		db.insertSample(name, averageDistances);
 	}
 	
 	// Feature set R
