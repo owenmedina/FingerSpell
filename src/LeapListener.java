@@ -53,21 +53,21 @@ public class LeapListener extends Listener {
 		// get all 11 points of interest
 		Vector[] pointsOfInterest = new Vector[Constants.NUM_POINTS];
 		for (Finger finger : frame.fingers()) {
-			System.out.println("Finger type: " + finger.type()
-								+ " ID: " + finger.id()
-								+ " Finger Length (mm): " + finger.length()
-								+ " Finger Width (mm): " + finger.width()
-								);
+//			System.out.println("Finger type: " + finger.type()
+//								+ " ID: " + finger.id()
+//								+ " Finger Length (mm): " + finger.length()
+//								+ " Finger Width (mm): " + finger.width()
+//								);
 
 			Bone tip = finger.bone(Bone.Type.TYPE_DISTAL);
-			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
-								+ " End: " + tip.nextJoint()
-								);
+//			System.out.println("Bone Type: " + Bone.Type.TYPE_DISTAL
+//								+ " End: " + tip.nextJoint()
+//								);
 			pointsOfInterest[indexPoints++] = tip.nextJoint();
 			Bone prox = finger.bone(Bone.Type.TYPE_PROXIMAL);
-			System.out.println("Bone Type: " + Bone.Type.TYPE_PROXIMAL
-								+ " Start: " + prox.prevJoint()
-								);
+//			System.out.println("Bone Type: " + Bone.Type.TYPE_PROXIMAL
+//								+ " Start: " + prox.prevJoint()
+//								);
 			pointsOfInterest[indexPoints++] = prox.prevJoint();
 		}
 		HandList handsInFrame = frame.hands();
@@ -79,9 +79,9 @@ public class LeapListener extends Listener {
 			Vector normal = h.palmNormal();
 			Vector direction = h.direction();
 			
-			System.out.println("Pitch: " + Math.toDegrees(direction.pitch()) //Yes
-								+ " Roll: " + Math.toDegrees(normal.roll()) //Maybe
-								+ " Yaw: " + Math.toDegrees(direction.yaw())); //No
+//			System.out.println("Pitch: " + Math.toDegrees(direction.pitch()) //Yes
+//								+ " Roll: " + Math.toDegrees(normal.roll()) //Maybe
+//								+ " Yaw: " + Math.toDegrees(direction.yaw())); //No
 		}
 		
 		// get all 55 distances
@@ -91,7 +91,7 @@ public class LeapListener extends Listener {
 				Vector point1 = pointsOfInterest[i];
 				Vector point2 = pointsOfInterest[j];
 				distances[indexDistances++] = Math.round(point1.distanceTo(point2));
-				System.out.println("Point" + i + " to Point" + j + ": " + distances[indexDistances-1]);
+				//System.out.println("Point" + i + " to Point" + j + ": " + distances[indexDistances-1]);
 			}
 		}
 		return distances;

@@ -1,11 +1,15 @@
 import java.util.HashMap;
 import java.util.List;
+import javafx.util.Pair;
 
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Finger.Type;
 import com.sun.javafx.collections.MappingChange.Map;
 
+
 public class Calculator {
+	public static String[] letters = {"A","B","C","D","E","F","G","H","I","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y"};
+	
 	public static double frobNorm(int[]a){
 		long sum = 0;
 		for(int i : a){
@@ -26,7 +30,9 @@ public class Calculator {
 		double scaleFactor2 = 0;
 		int tTipToPCSample = sample[Constants.INDEX_TTIP_PC];
 		int tTipToPCDB = db[Constants.INDEX_TTIP_PC];
-		scaleFactor2 = tTipToPCSample/tTipToPCDB;
+		System.out.println(tTipToPCSample);
+		System.out.println(tTipToPCDB);
+		scaleFactor2 = (double) tTipToPCSample/ (double) tTipToPCDB;
 		return scaleFactor2;
 	}
 	
@@ -34,7 +40,7 @@ public class Calculator {
 		double scaleFactor3 = 0;
 		int mTipToPCSample = sample[Constants.INDEX_MTIP_PC];
 		int mTipToPCDB = db[Constants.INDEX_MTIP_PC];
-		scaleFactor3 = mTipToPCSample/mTipToPCDB;
+		scaleFactor3 = (double) mTipToPCSample/ (double) mTipToPCDB;
 		return scaleFactor3;
 	}
 	
@@ -44,6 +50,45 @@ public class Calculator {
 			scaled[i] = (int) Math.floor(sample[i]/scaleFactor);
 		}
 		return scaled;
+	}
+	
+	public static double[] getScalingFactors(int[] sample_five, int[] five_db) {
+		double[] scalingFactors = new double[3];
+		double sf1 = scaleGesture1(sample_five,five_db);
+		double sf2 = scaleGesture2(sample_five,five_db);
+		double sf3 = scaleGesture3(sample_five,five_db);
+		scalingFactors[0] = sf1;
+		scalingFactors[1] = sf2;
+		scalingFactors[2] = sf3;
+		return scalingFactors;
+	}
+	
+	public static void recognizeGesture(int[] sample, double[] scalingFactors, LeapDB db) throws Exception {
+		//get the 3 scaling factors
+		double sf1 = scalingFactors[0];
+		double sf2 = scalingFactors[1];
+		double sf3 = scalingFactors[2];
+		
+		//Normalize the array for each factor
+		int[] normalizedArray1 = scaleGesture(sample,sf1);
+		int[] normalizedArray2 = scaleGesture(sample,sf2);
+		int[] normalizedArray3 = scaleGesture(sample,sf3);
+		
+		//Get the MinMoS for each factor
+		Pair<Double,Integer> minMOS1 = getMinMOS(normalizedArray1,db);
+		Pair<Double,Integer> minMOS2 = getMinMOS(normalizedArray2,db);
+		Pair<Double,Integer> minMOS3 = getMinMOS(normalizedArray3,db);
+		
+		//Print the recognized gesture for each
+		System.out.println("Guess for SF1: " + getMinGesture(minMOS1.getValue()));
+		System.out.println("Guess for SF2: " + getMinGesture(minMOS2.getValue()));
+		System.out.println("Guess for SF3: " + getMinGesture(minMOS3.getValue()));
+		
+		//Final guess is the min of all minMOS
+		double finalMOS = Math.min(Math.min(minMOS1.getKey(), minMOS2.getKey()), minMOS3.getKey());
+		if(finalMOS == minMOS1.getKey()) System.out.println("The gesture is: " + getMinGesture(minMOS1.getValue()));
+		else if(finalMOS == minMOS2.getKey()) System.out.println("The gesture is: " + getMinGesture(minMOS2.getValue()));
+		else System.out.println("The gesture is: " + getMinGesture(minMOS3.getValue()));
 	}
 	
 	public static int[] getDifferenceArray(int[] sample, int[] db) {
@@ -61,7 +106,7 @@ public class Calculator {
 		return mos;
 	}
 	
-	public static int getMinMOS(int[] sample, LeapDB db) {
+	public static Pair<Double,Integer> getMinMOS(int[] sample, LeapDB db) throws Exception{
 		int indexOfMinMOS = -1;
 		double minMOS = Double.MAX_VALUE;
 		int[][] allGestures = db.selectAllGestures();
@@ -72,7 +117,13 @@ public class Calculator {
 				minMOS = currMOS;
 			}
 		}
-		return indexOfMinMOS;
+		Pair<Double,Integer> mosVals = new Pair<>(minMOS,indexOfMinMOS);
+		return mosVals;
+	}
+	
+	public static String getMinGesture(int n){
+		//get the equivalent letter from the array
+		return letters[n];	
 	}
 	
 	// may not be usable

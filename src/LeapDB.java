@@ -24,7 +24,7 @@ public class LeapDB {
 			
 			//establish connection
 			String user = "root" ;
-			String pw = "" ;
+			String pw = "brianowen" ;
 			Connection conn = DriverManager.getConnection(url, user, pw);
 			System.out.println("Connected successfully."); //tester
 			return conn;
@@ -131,7 +131,7 @@ public static int[] selectGesture(String name) throws Exception{
 			result.next();
 			for(int i = 2; i <= Constants.NUM_DISTANCES + 1; i++) {
 				String num = result.getString(i);
-				System.out.println(num);
+				//System.out.println(num);
 				results[i-2] = Integer.parseInt(num);
 			}
 			
@@ -159,16 +159,16 @@ public static int[] selectGesture(String name) throws Exception{
 			while(result.next()) {
 				for(int i = 2; i <= Constants.NUM_DISTANCES + 1; i++) {
 					String num = result.getString(i);
-					System.out.println(num);
+					//System.out.println(num);
 					results[ctr][i-2] = Integer.parseInt(num);
 				}
 				ctr++;
 			}
 			
 			
-			System.out.println("Select from gestures success"); //tester;
+			System.out.println("Select all gestures success"); //tester;
 		}catch(Exception e) {
-			System.out.println("Error in selectGesture " + e); //in case of any errors;
+			System.out.println("Error in selectAllGestures " + e); //in case of any errors;
 		}
 		finally{
 		}

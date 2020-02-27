@@ -27,18 +27,25 @@ public class LeapController {
 			db.insertSample(name, distances);
 			System.out.println("Snapshot taken");
 		}else if(input.equals("f")) {
-			while( !input.equals("exit")) {
-				int [][] res = db.selectAllGestures();
-				System.out.println("Enter gesture name: ");
-				String name = sc.next();
-				int[] distances = db.selectGesture(name);
-				System.out.println(distances.length);
-		
+			Frame frame = controller.frame();
+			//get the subject's 5 hand first
+			System.out.println("Make a 5.");
+			int[] subject_five = listener.getEuclidDistances(frame);
+			int[] five_db = db.selectGesture("5");
+			//get the scaling factors using the subject's 5 and the db 5
+			double scalingFactors[] = calculator.getScalingFactors(subject_five, five_db);
+			System.out.println(Arrays.toString(scalingFactors));
+			String input2 = sc.next();
+			while( !input2.equals("exit")) {
+				//Keep getting input and recognizing it until prompted
+				Frame newFrame = controller.frame();
+				int[] currentGesture = listener.getEuclidDistances(newFrame);
+				System.out.println(Arrays.toString(currentGesture));
+				calculator.recognizeGesture(currentGesture, scalingFactors, db);
 				
-		
-		
-				System.out.println(calculator.frobNorm(distances));
-				input = sc.next();
+
+				//System.out.println(calculator.frobNorm(distances));
+				input2 = sc.next();
 			}
 			
 		}else if(input.equals("c")) {
