@@ -19,13 +19,23 @@ public class LeapController {
 		System.out.println("Press Enter to quit");
 		
 		Scanner sc = new Scanner(System.in);
-		String input = sc.next();
+		String input = sc.nextLine();
 		if(input.equals("s")) {
-			Frame frame = controller.frame();
-			int[] distances = listener.getEuclidDistances(frame);
+			int ctr = 1;
 			String name = sc.nextLine();
-			db.insertSample(name, distances);
-			System.out.println("Snapshot taken");
+			System.out.println(name);
+			String finalName = name;
+			while(!name.equals("D")) {
+				Frame frame = controller.frame();
+				int[] distances = listener.getEuclidDistances(frame);
+				name += ctr;
+				ctr++;
+				db.insertSample("raw_gestures",name, distances);
+				System.out.println("Snapshot taken of " + name);
+				name = sc.nextLine();
+				
+			}
+			calculator.averageSamples(finalName, db);
 		}else if(input.equals("f")) {
 			Frame frame = controller.frame();
 			//get the subject's 5 hand first

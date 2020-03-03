@@ -174,7 +174,7 @@ public class Calculator {
 			averageDistances[i] = (int) Math.floor(total/numSamples);
 		}
 		
-		db.insertSample(name, averageDistances);
+		db.insertSample("avg_gestures",name, averageDistances);
 	}
 	
 	// Feature set R
